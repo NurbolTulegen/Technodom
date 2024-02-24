@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technodom</title>
+    <style>
+        header {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            background-color: orange;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            border-bottom: 1px solid white;
+        }
+
+        h1, h2 {
+            margin: 0;
+            display: inline-block;
+            vertical-align: middle;
+            color: white;
+        }
+
+        img {
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div>
+        <h1><img src="images/technodom.png" height="40" width="40"/>Technodom</h1>
+    </div>
+</header>
+
+<header id="second-header">
+        <nav class="navigation">
+            <a class="nav-item" href="index.php">Главное</a>
+            <a class="nav-item" href="search.php">Найти</a>
+            <a class="nav-item" href="index.php">Избранное</a>
+            <a class="nav-item" href="classes.php">Новые продукты</a>
+            <?php
+                            if (!isset($_SESSION['user_id'])) {
+                                ?>
+            <a class="nav-item" aria-current="page" href="login.php">Авторизация</a>
+            <a class="nav-item" href="registration.php">Регистрация</a>
+            <?php
+                            } else {
+                                $user = getUser($_SESSION['user_id']);
+                                if ($user['role'] === 'admin') {
+                                    ?>
+            <a class="nav-item" href="additem.php">Добавить элемент</a>
+            <a class="nav-item" href="manage_users.php">Управление пользователями</a>
+            <?php } else {
+                                    ?>
+            <a class="nav-item" href="bucket.php">Корзина</a>
+            <a class="nav-item" href="my_orders.php">Мои заказы</a>
+            <?php }
+                                ?>
+            <a class="nav-item" aria-current="page" href="personal_page.php"><?= $user['name'] ?></a>
+            <a class="nav-item" aria-current="page" href="personal_page.php"><?= $user['lastname'] ?></a>
+            <a class="nav-item" href="logout.php">Выйти из аккаунта</a>
+            <?php
+                            }
+                            ?>
+        </nav>
+</header>
+
+
+</body>
+</html>
